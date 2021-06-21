@@ -1,0 +1,42 @@
+
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+ <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>books List</title>
+</head>
+<body>
+ <div class="container mb-5">
+        
+        <h4 class="mb-3 text-success"  style="margin-top:105px"> Please find the Reviews below: </h4>
+
+        <table class="table table-hover table-striped">
+            <thead class="table-dark">
+            <tr>
+                <th>Book Id</th>
+                <th>Book Title</th>
+                <th>Review Id</th>
+                <th>Comment</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "currentReview : ${reviews}">
+
+                <td th:text=${currentReview.bookId} />
+                <td th:each = "bookName : ${books}" th:if = ${currentReview.bookId==bookName.id} 
+                	th:text=${bookName.title}/>
+                <td th:text=${currentReview.id}/>
+                <td th:text=${currentReview.comment}/>
+            </tr>
+            </tbody>
+        </table>
+    <hr>
+    <a th:href="@{/books/list}">Back to Books List</a>
+    </div>
+</body>
+</html>

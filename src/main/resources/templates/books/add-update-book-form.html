@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <title>Save Employee</title>
+</head>
+<body>
+<div class="container">
+
+    <hr>
+    <p class="h4 mb-4">Save Book</p>
+    <form action="#" th:action="@{/books/save}" th:object="${book}" method="post">
+    
+			<!--  Add hidden form field to handle the update-->
+       		 <input type="hidden" th:field="*{id}">
+			
+            <input type="text" th:field="*{title}" class="form-control mb-4 col-4" placeholder="Title">
+            <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="mb-3 text-danger"></p>
+
+            <input type="text" th:field="*{author}" class="form-control mb-4 col-4" placeholder="Author">
+            <p th:if="${#fields.hasErrors('author')}" th:errors="*{author}" class="mb-3 text-danger"></p>
+
+            <input type="text" th:field="*{publisher}" class="form-control mb-4 col-4" placeholder="Publisher">
+            <p th:if="${#fields.hasErrors('publisher')}" th:errors="*{publisher}" class="mb-3 text-danger"></p>
+            
+            <input type="text" th:field="*{stock}" class="form-control mb-4 col-4" placeholder="Qty in stock">
+            <p th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}" class="mb-3 text-danger"></p>
+
+        <button type="submit" class="btn btn-info col-2">Save</button>
+    </form>
+
+    <hr>
+    <a th:href="@{/books/list}">Back to Books List</a>
+</div>
+
+</body>
+</html>
