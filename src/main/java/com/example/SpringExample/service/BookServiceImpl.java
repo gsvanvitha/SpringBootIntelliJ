@@ -27,53 +27,54 @@ public class BookServiceImpl implements BookService {
 	@Override
 	@Transactional
 	public List<Book> findAll() {
-		// TODO Auto-generated method stub
 		return bookRepository.findAll();
 	}
 
 	@Override
 	public Book findById(int theId) {
-		// TODO Auto-generated method stub
 		Optional<Book> result = bookRepository.findById(theId);
-		Book theEmployee;
+		Book theBook;
 		if(result.isPresent()) {
-			theEmployee = result.get();
+			theBook = result.get();
 		}
 		else {
 			return null;
 		}
-		return theEmployee;
+		return theBook;
 	}
 
 	@Override
-	public void save(Book theBook) {
-		// TODO Auto-generated method stub
-		bookRepository.save(theBook);
+	public Book save(Book theBook) {
+		return bookRepository.save(theBook);
 	}
 
 	@Override
 	public void deleteById(int theId) {
-		// TODO Auto-generated method stub
 		bookRepository.deleteById(theId);
 	}
 
 	@Override
 	public List<Review> findReviewsByBookId(int theId) {
-		// TODO Auto-generated method stub
-		Book theBook = findById(theId);
-		List<Review> listReviews = theBook.getReviews();
+		Optional<Book> result = bookRepository.findById(theId);
+		Book theBook;
+		List<Review> listReviews;
+		if(result.isPresent()) {
+			theBook = result.get();
+			listReviews = theBook.getReviews();
+		}
+		else {
+			return null;
+		}
 		return listReviews;
 	}
 
 	@Override
 	public List<Review> findAllReviews() {
-		// TODO Auto-generated method stub
 		return reviewRepository.findAll();
 	}
 
 	@Override
 	public void saveReview(Review theReview) {
-		// TODO Auto-generated method stub
 		reviewRepository.save(theReview);
 	}
 

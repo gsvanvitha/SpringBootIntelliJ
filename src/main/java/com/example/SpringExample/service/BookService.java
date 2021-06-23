@@ -6,14 +6,14 @@ import com.example.SpringExample.entity.Book;
 import com.example.SpringExample.entity.Review;
 
 public interface BookService {
+
+    List<Book> findAll();
 	
-public List<Book> findAll();
+	 Book findById(int theId);
 	
-	public Book findById(int theId);
+	 Book save(Book theBook);
 	
-	public void save(Book theBook);
-	
-	public void deleteById(int theId);
+	 void deleteById(int theId);
 	
     List<Review> findReviewsByBookId(int theId);
 

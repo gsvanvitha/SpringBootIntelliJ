@@ -1,9 +1,12 @@
 package com.example.SpringExample.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import com.example.SpringExample.entity.BookDTO;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,8 @@ public class BookRestController {
 	
 	
 	private BookService bookService;
+	@Autowired
+	private ModelMapper modelMapper;
 	
 	@Autowired
 	public BookRestController(BookService theBookService) {
@@ -38,17 +43,20 @@ public class BookRestController {
 	    StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
 	    theWebDataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
-	
-//	@GetMapping("/books")
-//	public List<Book> getBooks(){
-//		return bookService.findAll();
-//	}
+
 	@GetMapping("/list")
 	public String showAllBooks(Model theModel){
 		List<Book> theBooks = bookService.findAll();
 		System.out.println(theBooks);
 		theModel.addAttribute("books", theBooks);
 		return "books/list-books";
+	}
+	@GetMapping("/bookDto")
+	public String getAllBooks(Model theModel) {
+		List<BookDTO> theBooks = bookService.findAll().stream().map(book1 -> modelMapper.map(book1, BookDTO.class))
+				.collect(Collectors.toList());
+		theModel.addAttribute("books", theBooks);
+		return "books/list-bookDto";
 	}
 	 @GetMapping("/reviews")
 	    public String showAllReviews(Model theModel) throws InterruptedException {
@@ -94,13 +102,12 @@ public class BookRestController {
 	    @GetMapping("/reviews-by-bookId")
 	    public String showAllReviewsByBookId(Model theModel, @RequestParam("bookId") int theId) throws RuntimeException {
 	        List<Review> reviews = bookService.findReviewsByBookId(theId);
+			if(reviews==null)return "access-denied-page";
 	        theModel.addAttribute("bookId", theId);
 
 	        String bookTitle = bookService.findById(theId).getTitle();
 	        theModel.addAttribute("bookTitle",bookTitle);
 
-//	        if (reviews.isEmpty())
-//	            return "reviews-not-found";
 	        theModel.addAttribute("reviews", reviews);
 	        theModel.getAttribute(bookTitle);
 	        return "books/list-reviews-bookId";
@@ -122,5 +129,5 @@ public class BookRestController {
 	        return "redirect:/books/reviews";
 	    }
 
-	
+
 }

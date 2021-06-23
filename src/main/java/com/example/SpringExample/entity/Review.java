@@ -35,53 +35,12 @@ public class Review {
 	 @Column(name = "book_id")
 	 @Getter
 	 @Setter
-	    private int bookId;
-	 	
-	   /* public Review( String comment, Integer bookId) {
-	      
-	        this.comment = comment;
-	        this.bookId = bookId;
-	        System.out.println("==================="+bookId);
-	    }
-	 	@Autowired
-	    public Review(int id, String comment, int bookId) {
-	        this.id = id;
-	        this.comment = comment;
-	        this.bookId = bookId;
-	    }
-	public Review() {
-		
-	}*/
+     private int bookId;
 
 	public Review(String comment) {
 		this.comment = comment;
 	}
 
-	/*public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getComment() {
-		return comment;
-	}
-
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
-
-	public int getBookId() {
-		return bookId;
-	}
-
-	public void setBookId(Integer bookId) {
-		this.bookId = bookId;
-		System.out.println(bookId);
-	}
-*/
 	@Override
 	public String toString() {
 		return "Review [id=" + id + ", comment=" + comment + ", bookId= "+ bookId + "]";

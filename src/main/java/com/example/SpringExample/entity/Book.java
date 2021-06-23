@@ -17,12 +17,10 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.stereotype.Component;
 
+@Data
 @Component
 @Entity
 @Table(name="book")
@@ -68,55 +66,7 @@ public class Book {
 	@Getter
 	@Setter
 	private List<Review> reviews;
-	
-	/*public Book() {
 
-	}
-	public Book(int id, String title, String author, String publisher, int stock, List<Review> reviews) {
-		this.id = id;
-		this.title = title;
-		this.author = author;
-		this.publisher = publisher;
-		this.stock = stock;
-		this.reviews = reviews;
-	}*/
-
-	/*public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getTitle() {
-		return title;
-	}
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	public String getAuthor() {
-		return author;
-	}
-	public void setAuthor(String author) {
-		this.author = author;
-	}
-	public String getPublisher() {
-		return publisher;
-	}
-	public void setPublisher(String publisher) {
-		this.publisher = publisher;
-	}
-	public int getStock() {
-		return stock;
-	}
-	public void setStock(int stock) {
-		this.stock = stock;
-	}
-	public List<Review> getReviews() {
-		return reviews;
-	}
-	public void setReviews(List<Review> reviews) {
-		this.reviews = reviews;
-	}*/
 	public void addReview(Review tempReview) {
 		if(reviews==null)reviews=new ArrayList<>();
 		reviews.add(tempReview);

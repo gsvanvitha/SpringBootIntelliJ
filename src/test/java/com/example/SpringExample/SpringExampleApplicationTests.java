@@ -12,36 +12,76 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringExampleApplicationTests {
-    @Test
-    public void contextLoads() {
-    }
-
-//    @Autowired
-//    private BookService bookService;
 
     @Autowired
     private BookService bookService;
 
 
-    @Autowired
+    @MockBean
     private BookRepository bookRepository;
 
+    @Test
+   public void testGetBooks(){
+       when(bookRepository.findAll()).thenReturn(Stream.of(new Book(41, "To Kill A Mocking Bird", "Jay", "FP", 89, null))
+               .collect(Collectors.toList()));
+       assertEquals(1, bookService.findAll().size());
+   }
 
+    @Test
+    public void testSaveBook(){
+        Book book = new Book(50, "Becoming", "Michelle Obama", "Obama", 81, null);
+        when(bookRepository.save(book)).thenReturn(book);
+        assertEquals(book, bookService.save(book));
+   }
+   @Test
+   public void testDeleteBook(){
+        Book book = new Book(50, "Becoming", "Michelle Obama", "Obama", 81, null);
+        bookService.deleteById(50);
+        verify(bookRepository,times(1)).deleteById(50);
+   }
+
+    @Test
+    public void testUpdateBook(){
+        Book book = new Book(50, "Becoming", "Michelle Obama", "Obama", 81,null);
+        when(bookRepository.save(book)).thenReturn(book);
+        book.setStock(70);
+        when(bookRepository.save(book)).thenReturn(book);
+        assertEquals(book.getStock(), 70);
+    }
+}
+
+   /* @RunWith(SpringRunner.class)
+    @SpringBootTest
+    public class SpringExampleApplicationTests {
+        @Test
+        public void contextLoads() {
+        }
+        @Autowired
+    private BookService bookService;
+@Autowired
+private BookRepository bookRepository;
     @Test
     public void testGetBooks() {
         List<Book> bookList = bookRepository.findAll();
@@ -144,3 +184,4 @@ public class SpringExampleApplicationTests {
 
     }
 }
+*/

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+ <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <title>Books List</title>
+    
+    <style type="text/css">
+    .topcorner{
+     position:absolute;
+     top:30px;
+     right:330px;
+    }
+    </style>
+</head>
+<body>
+<div class="container">
+
+ <h3 th:inline="text" style="margin-top:30px">Hi <span style="text-transform: uppercase">[[${#httpServletRequest.remoteUser}]],</span> Welcome!</h3>
+ <form action="#" th:action="@{/logout}"
+          method="POST"
+          class="btn btn-logout mt-2">
+        <input type="submit" align="right" style="margin-top:10px" class="topcorner" value="Logout" />
+    </form>
+	<h3>Book Directory</h3>
+		<hr>
+ <div>
+        <div th:if="${#authorization.expression('hasAuthority(''ROLE_STAFF'')')}">
+    <a th:href="@{/books/showFormForAdd}"
+    class="btn btn-primary btn-sm mb-3">
+        Add Book
+    </a>
+     <a th:href="@{/books/reviews}"
+    class="btn btn-primary btn-sm mb-3">
+        View Reviews
+    </a>
+        </div>
+        </div> 
+        
+		<table class="table table-bordered table-striped">
+		<thead class="table-dark">
+			<tr>
+				<th>Title</th>
+				<th>Author</th>
+				<th>Publisher</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="tempBook :${books}">
+				<td th:text="${tempBook.title}"/>
+				<td th:text="${tempBook.author}"/>
+				<td th:text="${tempBook.publisher}"/>
+			</tr>
+		</tbody>
+	</table>
+</div>
+</body>
+</html>
